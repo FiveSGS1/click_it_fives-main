@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:click_it_app/controllers/upload_images_provider.dart';
 import 'package:click_it_app/presentation/screens/Splash/splash_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -33,7 +34,7 @@ Future<void> saveErrorToFile(FlutterErrorDetails errorDetails) async {
       folder.createSync(recursive: true);
     }
 
-    final fileName = '${DateTime.now().millisecond}crash_log.txt';
+    final fileName = '${DateTime.now().millisecond}crash_loflflug.txt';
     final file = File('$folderPath/$fileName');
     final crashLog = errorDetails.toString();
     await file.writeAsString(crashLog);

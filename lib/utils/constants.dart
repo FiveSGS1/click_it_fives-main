@@ -1,16 +1,15 @@
-
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:http/http.dart' as http;
+
 import 'package:click_it_app/preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ClickItConstants{
-
+class ClickItConstants {
   static String frontImageUploadedKey = 'isFrontImageUploaded';
   static String backImageUploadedKey = 'isBackImageUploaded';
   static String leftImageUploadedKey = 'isLeftImageUploaded';
@@ -31,7 +30,7 @@ class ClickItConstants{
   static bool nutrientsImageProcessing = false;
 
   static bool isShowSavedSyncEasyLoading = false;
-  static String appVersion = "1.0.2";
+  static String appVersion = "1.0.7";
   static String appVersionIOS = "1.0.5";
 
   static String APIID = "df4a3e288e73d4e3d6e4a975a0c3212d";
@@ -43,20 +42,18 @@ class ClickItConstants{
 
   static bool isShowRatingOnce = false;
 
-  static reloadSharedPreference() async{
+  static reloadSharedPreference() async {
     bool isShowProceedDialog = false;
 
-    String userName =
-        await AppPreferences.getValueShared('company_id');
-    String company_name =
-        await AppPreferences.getValueShared('company_name');
+    String userName = await AppPreferences.getValueShared('company_id');
+    String company_name = await AppPreferences.getValueShared('company_name');
 
     bool isShowRating =
         await AppPreferences.getValueShared('isShowRating') == null
-        ? true : AppPreferences.getValueShared('isShowRating');
+            ? true
+            : AppPreferences.getValueShared('isShowRating');
 
-    dynamic retrievedData =
-        await AppPreferences.getValueShared('login_data');
+    dynamic retrievedData = await AppPreferences.getValueShared('login_data');
 
     var uid = AppPreferences.getValueShared('uid');
 
@@ -64,46 +61,48 @@ class ClickItConstants{
 
     var roleId = AppPreferences.getValueShared('role_id');
 
-    bool homeScreenCoachDone = AppPreferences.getValueShared("homeScreenCoach") ?? false;
-    bool uploadScreenCoachDone = AppPreferences.getValueShared("uploadScreenCoach") ?? false;
-    bool saveScreenCoachDone = AppPreferences.getValueShared("saveScreenCoach") ?? false;
+    bool homeScreenCoachDone =
+        AppPreferences.getValueShared("homeScreenCoach") ?? false;
+    bool uploadScreenCoachDone =
+        AppPreferences.getValueShared("uploadScreenCoach") ?? false;
+    bool saveScreenCoachDone =
+        AppPreferences.getValueShared("saveScreenCoach") ?? false;
 
-    if(AppPreferences.getValueShared(ClickItConstants.isShowProceedDialogKey)!=null){
-       isShowProceedDialog =  AppPreferences.getValueShared(ClickItConstants.isShowProceedDialogKey);
+    if (AppPreferences.getValueShared(
+            ClickItConstants.isShowProceedDialogKey) !=
+        null) {
+      isShowProceedDialog = AppPreferences.getValueShared(
+          ClickItConstants.isShowProceedDialogKey);
     }
-
 
     AppPreferences.clearSharedPreferences();
 
-    AppPreferences.addSharedPreferences(homeScreenCoachDone,"homeScreenCoach");
-    AppPreferences.addSharedPreferences(uploadScreenCoachDone,"uploadScreenCoach");
-    AppPreferences.addSharedPreferences(saveScreenCoachDone,"saveScreenCoach");
-
+    AppPreferences.addSharedPreferences(homeScreenCoachDone, "homeScreenCoach");
     AppPreferences.addSharedPreferences(
-        uid, 'uid');
+        uploadScreenCoachDone, "uploadScreenCoach");
+    AppPreferences.addSharedPreferences(saveScreenCoachDone, "saveScreenCoach");
 
-    AppPreferences.addSharedPreferences(
-        source, 'source');
+    AppPreferences.addSharedPreferences(uid, 'uid');
 
-    AppPreferences.addSharedPreferences(
-        roleId, 'role_id');
+    AppPreferences.addSharedPreferences(source, 'source');
+
+    AppPreferences.addSharedPreferences(roleId, 'role_id');
 
     AppPreferences.addSharedPreferences(userName, 'company_id');
-    AppPreferences.addSharedPreferences(
-        company_name, 'company_name');
+    AppPreferences.addSharedPreferences(company_name, 'company_name');
     AppPreferences.addSharedPreferences(false, 'isImageUploaded');
     AppPreferences.addSharedPreferences(userName, 'company_id');
 
-    AppPreferences.addSharedPreferences(
-        retrievedData, 'login_data');
+    AppPreferences.addSharedPreferences(retrievedData, 'login_data');
     AppPreferences.addSharedPreferences(false, "isShowTutorial");
-    AppPreferences.addSharedPreferences(isShowRating,"isShowRating");
+    AppPreferences.addSharedPreferences(isShowRating, "isShowRating");
     AppPreferences.addSharedPreferences(
         isShowProceedDialog, isShowProceedDialogKey);
   }
 
-  static Future<String?> saveCompressedImageToDevice(Uint8List? compressedImage) async{
-   /* if (compressedImage != null) {
+  static Future<String?> saveCompressedImageToDevice(
+      Uint8List? compressedImage) async {
+    /* if (compressedImage != null) {
       Random random = Random();
       int randomNumber = random.nextInt(10000);
       final directory = await getTemporaryDirectory();
@@ -137,7 +136,6 @@ class ClickItConstants{
     return null;
   }
 
-
   /*static Future<String?> saveCompressedImageToDeviceTwo(Uint8List? compressedImage) async{
     if (compressedImage != null) {
       Random random = Random();
@@ -159,7 +157,6 @@ class ClickItConstants{
     }
     return null;
   }*/
-
 
   static Future<String?> saveImageToDevice(Uint8List? backgroundRemovedImage,
       {String? imageUrl}) async {
@@ -188,23 +185,21 @@ class ClickItConstants{
     return null;
   }
 
-  static showProceedDialog(BuildContext context){
+  static showProceedDialog(BuildContext context) {
     bool isChecked = false;
     showDialog(
         context: context,
         builder: (context) {
-          return StatefulBuilder(builder: (ctx, stfSetState){
+          return StatefulBuilder(builder: (ctx, stfSetState) {
             return AlertDialog(
               title: Text('Info'),
-              content:  Text(
+              content: Text(
                   'Background removal is in progress.Please feel free to proceed with additional images.',
                   textAlign: TextAlign.start,
-                  style:  TextStyle(
+                  style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
-                      fontWeight: FontWeight.w400
-                  )
-              ),
+                      fontWeight: FontWeight.w400)),
               actions: [
                 Row(
                   children: [
@@ -217,21 +212,24 @@ class ClickItConstants{
                         });
                       },
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text('Don\'t show again?')
                   ],
                 ),
-                TextButton(onPressed: (){
-                  if(isChecked) {
-                    AppPreferences.addSharedPreferences(
-                        true, isShowProceedDialogKey);
-                  }
-                  Navigator.pop(context);
-                }, child: Text('Ok'))
+                TextButton(
+                    onPressed: () {
+                      if (isChecked) {
+                        AppPreferences.addSharedPreferences(
+                            true, isShowProceedDialogKey);
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: Text('Ok'))
               ],
             );
           });
-
         });
   }
 
@@ -245,18 +243,13 @@ class ClickItConstants{
       print('width = ${size.width}, height = ${size.height}');
     }
 
-    return ""+size.width.toString()+"x"+size.height.toString()+"";
+    return "" + size.width.toString() + "x" + size.height.toString() + "";
   }
 
-  static Future<String?> saveAndGetImagePath(String url) async{
-
-
+  static Future<String?> saveAndGetImagePath(String url) async {
     final tempDir = await getTemporaryDirectory();
     final file = await File('${tempDir.path}/image.jpg').create();
     file.writeAsString(url);
     return file.path;
   }
-
-
-
 }
